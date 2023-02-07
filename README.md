@@ -4,4 +4,14 @@
 
 2.API 명세서
 
-https://www.notion.so/b3d6265897034bb1892db21d012ff5ad?v=9d6e14688af84b7781651748fc986f84
+# 전체 글 조회
+
+[게시글 작성](https://www.notion.so/d69ab9c1882344fe94d5b39e14360cef)
+
+[선택한 게시글 조회](https://www.notion.so/b37a0d67220342168096b438996f7878)
+
+[선택한 게시글 수정](https://www.notion.so/08f63b0af00940d9a74d96bc0b0d525a)
+
+[선택한 게시글 삭제](https://www.notion.so/eab3bfa90ba74ac9949f0a86a8af19d7)
+
+[](https://www.notion.so/4a4be172e8f94f79815b82e885e6b31e)
