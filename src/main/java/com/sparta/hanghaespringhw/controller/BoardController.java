@@ -38,5 +38,15 @@ public class BoardController {
         return boardService.find(id, requestDto);
     }
 
+    @PutMapping("/api/boards/{id}")
+    public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) throws Exception {
+        return boardService.update(id, requestDto);
+    }
+
+
+    @DeleteMapping("/api/boards/{id}")
+    public String deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) throws Exception {
+        return boardService.deleteBoard(id, requestDto);
+    }
 
 }

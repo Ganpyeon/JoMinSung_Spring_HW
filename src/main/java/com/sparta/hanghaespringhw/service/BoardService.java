@@ -45,5 +45,26 @@ public class BoardService {
         return board.getId();
     }
 
+    @Transactional
+    public Long update(Long id, BoardRequestDto requestDto) throws Exception {
+        Board board = boardRepository.findById(id).orElseThrow( // 게시물 수정하기 코드
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
+        );
+        if (!requestDto.getPassword().equals(requestDto.getPassword()))
+            throw new Exception("비밀번호가 다릅니다.");// 비밀번호를 비교하여 다르면 비밀번호가 다르다고 표기해줌
+        board.update(requestDto); // id와 비밀번호가 모두 일치하면 데이터를 수정해준다,
+        return board.getId();
+    }
+
+    @Transactional
+    public String deleteBoard(Long id, BoardRequestDto requestDto) throws Exception {
+        Board board = boardRepository.findById(id).orElseThrow( // 게시물을 삭제하는 코드
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+        if (!requestDto.getPassword().equals(requestDto.getPassword()))
+            throw new Exception("비밀번호가 다릅니다.");
+        boardRepository.deleteById(id);
+        return ("게시글이 삭제 되었습니다.");
+    }
 
 }
