@@ -4,4 +4,4 @@
 
 2.API 명세서
 
-https://www.notion.so/989aaf3cba654ab8897bd7ebe98b6ebb?v=0de90e7c7801482295d1a84d28cf8aac
+https://www.notion.so/b3d6265897034bb1892db21d012ff5ad?v=9d6e14688af84b7781651748fc986f84
