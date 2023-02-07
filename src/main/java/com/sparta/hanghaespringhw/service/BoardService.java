@@ -37,23 +37,22 @@ public class BoardService {
     }
 
     @Transactional
-    public Long find(Long id, BoardRequestDto requestDto) { // 선택한 게시물 찾기
+    public BoardResponseDto find(Long id) { // 선택한 게시물 찾기
         Board board = boardRepository.findById(id).orElseThrow( // 고유번호 Id로 선택한 게시물을 찾음
                 () -> new IllegalArgumentException("게시물 없음") // 아이디가 빈칸이면 게시물 없음이라고 띄워줌
         );
-        board.find(requestDto); // 찾으면 그 고유번호에 맞는 데이터를 가져와줌
-        return board.getId();
+        return new BoardResponseDto(board);// 찾으면 그 고유번호에 맞는 데이터를 가져와줌
     }
 
     @Transactional
-    public Long update(Long id, BoardRequestDto requestDto) throws Exception {
+    public Board update(Long id, BoardRequestDto requestDto) throws Exception {
         Board board = boardRepository.findById(id).orElseThrow( // 게시물 수정하기 코드
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
         );
         if (!requestDto.getPassword().equals(requestDto.getPassword()))
             throw new Exception("비밀번호가 다릅니다.");// 비밀번호를 비교하여 다르면 비밀번호가 다르다고 표기해줌
         board.update(requestDto); // id와 비밀번호가 모두 일치하면 데이터를 수정해준다,
-        return board.getId();
+        return board;
     }
 
     @Transactional
