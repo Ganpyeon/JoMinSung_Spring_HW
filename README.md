@@ -4,5 +4,4 @@
 
 2.API 명세서
 
-![스크린샷_20230208_124325](https://user-images.githubusercontent.com/121671967/217297572-e5136805-aef7-47aa-bc22-ddf6f72108fa.png)
-
+![스크린샷_20230208_010457](https://user-images.githubusercontent.com/121671967/217298141-06eb63c2-31d3-49d9-af88-c40dfbaea670.png)
