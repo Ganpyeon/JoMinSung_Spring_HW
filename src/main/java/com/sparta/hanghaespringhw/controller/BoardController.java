@@ -17,7 +17,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public ModelAndView home() { // 이게 localhost:8080을 열어주는 코드?
+    public ModelAndView home() { // 이게 localhost:8080을 열어주는 코드
         return new ModelAndView("index");
     }
 
@@ -34,8 +34,8 @@ public class BoardController {
     }
 
     @GetMapping("/api/boards/{id}")
-    public BoardResponseDto findBoard(@PathVariable Long id){ // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
-        return boardService.find(id);
+    public Board findBoard(@PathVariable Long id,@RequestBody BoardRequestDto requestDto) throws Exception { // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
+        return boardService.find(id, requestDto);
     }
 
     @PutMapping("/api/boards/{id}")
