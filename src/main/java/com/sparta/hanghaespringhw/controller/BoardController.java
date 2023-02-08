@@ -34,12 +34,12 @@ public class BoardController {
     }
 
     @GetMapping("/api/boards/{id}")
-    public Board findBoard(@PathVariable Long id,@RequestBody BoardRequestDto requestDto) throws Exception { // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
+    public BoardResponseDto findBoard(@PathVariable Long id,@RequestBody BoardRequestDto requestDto) throws Exception { // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
         return boardService.find(id, requestDto);
     }
 
     @PutMapping("/api/boards/{id}")
-    public Board updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) throws Exception {
+    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) throws Exception {
         return boardService.update(id, requestDto);
     }
 
