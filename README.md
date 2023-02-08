@@ -9,9 +9,11 @@
 3. Q n A
 
 . 수정, 삭제 API의 request를 어떤 방식으로 사용하셨나요? (param, query, body)
+
 body 방식을 사용을 하였으며 다른 두개를 사용을 안해봐서 모르지만 body를 쓴이유는 @Requestbody를 쓸때 어떤 값을 담아서 보낼지를 정하기위해 body를 사용하였습니다.
 
 . 어떤 상황에 어떤 방식의 request를 써야하나요?
+
 
 . RESTful한 API를 설계했나요? 어떤 부분이 그런가요? 어떤 부분이 그렇지 않나요?
 
