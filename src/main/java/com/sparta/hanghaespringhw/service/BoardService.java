@@ -71,38 +71,17 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponseDto find(Long id, BoardRequestDto requestDto , HttpServletRequest request) { // 선택한 게시물 찾기
+    public BoardResponseDto find(Long id, BoardRequestDto requestDto) { // 선택한 게시물 찾기
 
         Board board = boardRepository.findById(id).orElseThrow( // id를 먼저 찾는다
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
         );
-
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
-
-        // 토큰이 있는 경우에만 관심상품 최저가 업데이트 가능
-        if (token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
-            );
 
             // 요청받은 DTO 로 DB에 저장할 객체 만들기
             board.find(requestDto);
             new BoardResponseDto(board);
 
             return new BoardResponseDto(board);
-        } else {
-            return null;
-        }
     }
 
     @Transactional

@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // 게시글 과 작서자 연관 관계 한 유저가 여러개의 게시글을 작성할수 있으면 여러개의 게시글을 조회 할수 있으니 ONE TO MANY
+    // 게시글 과 작성자 연관 관계 한 유저가 여러개의 게시글을 작성할수 있으면 여러개의 게시글을 조회 할수 있으니 ONE TO MANY
     /*@OneToMany
     List<Board> boards = new ArrayList<>();*/
 

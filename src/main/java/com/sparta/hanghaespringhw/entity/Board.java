@@ -14,8 +14,8 @@ public class Board extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // 주문을 받을때마다 자동으로 식별할수 있는 고유 번호를 만들어줌
 
-    @Column(nullable = false)
-    private String username;
+   /* @Column(nullable = false)
+    private String username;*/
 
     @Column(nullable = false)
     private String contents;

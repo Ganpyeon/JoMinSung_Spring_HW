@@ -24,6 +24,7 @@ public class BoardResponseDto { // Entity값은 변형 되지 말아야 하고 �
         this.title = board.getTitle();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
+
     }
 
 }
