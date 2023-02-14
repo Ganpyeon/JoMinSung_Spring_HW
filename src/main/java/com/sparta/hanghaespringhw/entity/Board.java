@@ -23,25 +23,28 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String password;
+//    @Column(nullable = false)
+//    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User userId;
 
 
-    public Board(BoardRequestDto requestDto) {
-        this.username = requestDto.getUsername();
+
+    public Board(BoardRequestDto requestDto,User userId) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
-        this.password = requestDto.getPassword();
+//        this.password = requestDto.getPassword();
+        this.userId = userId;
     }
 
     public void find(BoardRequestDto boardRequestDto) {
-        this.username = boardRequestDto.getUsername();
         this.contents = boardRequestDto.getContents();
         this.title = boardRequestDto.getTitle();
     }
 
     public void update(BoardRequestDto boardRequestDto) {
-        this.username = boardRequestDto.getUsername();
         this.contents = boardRequestDto.getContents();
         this.title = boardRequestDto.getTitle();
     }
