@@ -6,7 +6,14 @@ Spring 입문 주차
 
 API 명세서
 
-![스크린샷_20230208_010457](https://user-images.githubusercontent.com/121671967/217298141-06eb63c2-31d3-49d9-af88-c40dfbaea670.png)
+|기능|Method|URL|request|response|
+|:---|:---|:---|:---|:---|
+|전체 글 조회|GET|/api/boards|("title" = "제목",
+"contents" = "작성내용"|/api/boards|
+|게시물 작성|POST|/api/boards|/api/boards|/api/boards|
+|선택한 게시물 조회|GET|/api/boards/{id}|/api/boards|/api/boards|
+|게시물 수정|PUT|/api/boards/{id}|/api/boards|/api/boards|
+|게시물 삭제|DELETE|/api/boards/{id}|/api/boards|/api/boards|
 
 
 Spring 숙련 주차
