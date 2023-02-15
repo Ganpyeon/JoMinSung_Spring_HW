@@ -8,8 +8,8 @@ API 명세서
 
 |기능|Method|URL|request|response|
 |:---|:---|:---|:---|:---|
-|전체 글 조회|GET|/api/boards|-||{"title" = "제목", "contents" = "작성내용", "username" = "작성자", "password" = "비밀번호"}|
-|게시물 작성|POST|/api/boards||{"title" = "제목", "contents" = "작성내용", "username" = "작성자", "password" = "비밀번호")||/api/boards||
+|전체 글 조회|GET|/api/boards|-|{"title" = "제목", "contents" = "작성내용", "username" = "작성자", "password" = "비밀번호"}||
+|게시물 작성|POST|/api/boards|{"title" = "제목", "contents" = "작성내용", "username" = "작성자", "password" = "비밀번호")|/api/boards||
 |선택한 게시물 조회|GET|/api/boards/{id}|/api/boards|/api/boards|
 |게시물 수정|PUT|/api/boards/{id}|/api/boards|/api/boards|
 |게시물 삭제|DELETE|/api/boards/{id}|/api/boards|/api/boards|
