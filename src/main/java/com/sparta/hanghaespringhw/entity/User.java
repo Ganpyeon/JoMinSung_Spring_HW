@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity(name = "users")
-public class User {
+public class User { // 회원을 만들기 위한 Entity객체 이며 회원 가입할때 필요한 데이터들 이다.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

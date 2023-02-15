@@ -20,8 +20,6 @@ public class BoardController {
 
     @PostMapping("/api/boards")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) { // 웹에서 DB로 게시물 저장을 위한 코드
-         //원래는 Board(Entity)를 출력했는데 그러면 원하지 않는 정보까지 전부다 출력되기에 Board를 하나 저장하는 코드
-         // 그다음 Board(Entity)의 값을 다시 BoardResponseDto에 넣어서 받은 데이터중 원하는 데이터만 다시 클라이언트로 반환 해줌
         return boardService.createBoard(requestDto, request);
     }
 
@@ -36,7 +34,7 @@ public class BoardController {
     }
 
     @PutMapping("/api/boards/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request)  {
+    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request)  { // 게시물 수정코드 이다
         return boardService.update(id, requestDto, request);
     }
 

@@ -28,15 +28,14 @@ public class Board extends Timestamped {
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    private User userId;
+    private User userId; // user와 board에 연관관계를 해서 user에 있는 변수들을 찾아서 써줌
 
 
 
     public Board(BoardRequestDto requestDto,User userId) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
-//        this.password = requestDto.getPassword();
-        this.userId = userId;
+        this.userId = userId; // 이걸로 user에 있는 데이터까지 다 받아줌
     }
 
     public void find(BoardRequestDto boardRequestDto) {

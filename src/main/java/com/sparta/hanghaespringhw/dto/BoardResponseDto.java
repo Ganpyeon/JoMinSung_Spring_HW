@@ -19,7 +19,7 @@ public class BoardResponseDto { // Entity값은 변형 되지 말아야 하고 �
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();
-        this.username = board.getUserId().getUsername();
+        this.username = board.getUserId().getUsername(); //boardEntity에서 user의 데이터를 받아왔다. 원래는 board에서 username을 받았다면 이번에는 로그인한 유저에 있는 username을 가져와야되서
         this.contents = board.getContents();
         this.title = board.getTitle();
         this.createdAt = board.getCreatedAt();

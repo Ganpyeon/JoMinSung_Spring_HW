@@ -64,7 +64,7 @@ public class BoardService {
     public List<BoardResponseDto> getboard() {
         List<Board> boards = boardRepository.findAllByOrderByModifiedAtDesc(); // 이대로 반환하면 board에 있는 값이 나와서 비밀번호 값도 나와버림
         List<BoardResponseDto> responseDtos = new ArrayList<>(); // 그래서 리스트를 하나 만들어서 password를 뺀 값을 리스트에 넣어줌
-        for (Board board : boards) { // for (a : b) 세미 콜론은 둘다 배열일때 b에 있는 값을 차례대로 a에 넣는데 b가 a에 넣을값이 없을때까지 반복문을 돌린다
+        for (Board board : boards) { // for (a : b) 세미 콜론은 둘다 배열일때 b에 있는 값을 차례대로 a에 넣는데 b가 a에 넣을값이 없을때까지 반복문을 돌린다 여기서 a는 공간이 빈 배열이다.
             responseDtos.add(new BoardResponseDto(board)); // 리스트에 BoardResponseDto에 board에 있는 모든값을 넣어서 출력하고 싶은것만 출력함
         }
         return responseDtos;
@@ -73,7 +73,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto find(Long id, BoardRequestDto requestDto) { // 선택한 게시물 찾기
 
-        Board board = boardRepository.findById(id).orElseThrow( // id를 먼저 찾는다
+        Board board = boardRepository.findById(id).orElseThrow( // 게시물의 고유id를 먼저 찾아서
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
         );
 
@@ -85,8 +85,8 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardResponseDto update(Long id, BoardRequestDto requestDto, HttpServletRequest request) {
-        Board board = boardRepository.findById(id).orElseThrow( // 게시물 수정하기 코드
+    public BoardResponseDto update(Long id, BoardRequestDto requestDto, HttpServletRequest request) { // 게시물 수정하는 코드
+        Board board = boardRepository.findById(id).orElseThrow( // 게시물의 고유 ID를 검색해서 게시물이 있는지 없는지 확인을 먼저 해줌
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
         );
 
@@ -119,8 +119,8 @@ public class BoardService {
     }
 
     @Transactional
-    public String deleteBoard(Long id, BoardRequestDto requestDto, HttpServletRequest request)  {
-        Board board = boardRepository.findById(id).orElseThrow( // 게시물을 삭제하는 코드
+    public String deleteBoard(Long id, BoardRequestDto requestDto, HttpServletRequest request)  { // 게시물 삭제
+        Board board = boardRepository.findById(id).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         String token = jwtUtil.resolveToken(request);
