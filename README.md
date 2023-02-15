@@ -29,7 +29,7 @@ ERD
 API 명세서
 
 |기능|Method|URL|request_header|request|response|response_header|
-|:---|:---|:---|:---|:---|
+|:---|:---|:---|:---|:---|:---|:---|
 |전체 글 조회|GET|/api/boards|-|-|{<br>"id" = 1,<br> <br>"title" = "제목",<br> <br>"contents" = "작성내용",<br> <br>"username" = "작성자",<br> <br>"createdAt" = "작성 날짜",<br> <br>"modifiedAt" = "수정 날짜"<br>}|-|
 |게시물 작성|POST|/api/boards|-|{<br>"title" = "제목",<br> <br>"contents" = "작성내용",<br> <br>"username" = "작성자",<br> <br>"password" = "비밀번호"<br>}|{<br>"id" = 1,<br> <br>"title" = "제목",<br> <br>"contents" = "작성내용",<br> <br>"username" = "작성자",<br> <br>"createdAt" = "작성 날짜",<br> <br>"modifiedAt" = "수정 날짜"<br>}|
 |선택한 게시물 조회|GET|/api/boards/{id}|-|{<br>"id" = 1,<br> <br>"title" = "제목",<br> <br>"contents" = "작성내용",<br> <br>"username" = "작성자",<br> <br>"createdAt" = "작성 날짜",<br> <br>"modifiedAt" = "수정 날짜"<br>}|-|
