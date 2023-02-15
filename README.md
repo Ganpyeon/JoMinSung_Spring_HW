@@ -8,7 +8,7 @@ API 명세서
 
 |기능|Method|URL|request|response|
 |:---|:---|:---|:---|:---|
-|전체 글 조회|GET|/api/boards|-|{"id" = 1, "title" = "제목", "contents" = "작성내용", "username" = "작성자", "createdAt" = "작성 날짜", "modifiedAt" = "수정 날짜"}|
+|전체 글 조회|GET|/api/boards|-|{<br>"id" = 1, "title" = "제목",<br> <br>"contents" = "작성내용",<br> <br>"username" = "작성자",<br> <br>"createdAt" = "작성 날짜",<br> <br>"modifiedAt" = "수정 날짜"<br>}|
 |게시물 작성|POST|/api/boards|{"title" = "제목", "contents" = "작성내용", "username" = "작성자", "password" = "비밀번호"}|{"id" = 1, "title" = "제목", "contents" = "작성내용", "username" = "작성자", "createdAt" = "작성 날짜", "modifiedAt" = "수정 날짜"}|
 |선택한 게시물 조회|GET|/api/boards/{id}|-|{"id" = 1, "title" = "제목", "contents" = "작성내용", "username" = "작성자", "createdAt" = "작성 날짜", "modifiedAt" = "수정 날짜"}|
 |게시물 수정|PUT|/api/boards/{id}|{"title" = "수정 제목", "contents" = "수정 작성내용", "username" = "수정 작성자"}|{"id" = 1, "title" = "수정 제목", "contents" = "수정 내용", "username" = "수정 작성자", "createdAt" = "작성 날짜", "modifiedAt" = "수정 날짜"}|
