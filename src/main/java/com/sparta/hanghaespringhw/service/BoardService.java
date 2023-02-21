@@ -1,58 +1,41 @@
 package com.sparta.hanghaespringhw.service;
 
 
+import com.sparta.hanghaespringhw.dto.CheckResponseDto;
 import com.sparta.hanghaespringhw.entity.Board;
 import com.sparta.hanghaespringhw.dto.BoardRequestDto;
 import com.sparta.hanghaespringhw.dto.BoardResponseDto;
 import com.sparta.hanghaespringhw.entity.User;
-import com.sparta.hanghaespringhw.jwt.JwtUtil;
+import com.sparta.hanghaespringhw.entity.UserRoleEnum;
 import com.sparta.hanghaespringhw.repository.BoardRepository;
-import com.sparta.hanghaespringhw.repository.UserRepository;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
+
+
 
     @Transactional
-    public BoardResponseDto createBoard(BoardRequestDto requestDto ,HttpServletRequest request) { // 게시물 등록하기
+    public BoardResponseDto createBoard(BoardRequestDto requestDto, User user) { // 게시물 등록하기
 
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
 
-        // 토큰이 있는 경우에만 관심상품 최저가 업데이트 가능
-        if (token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
-
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
-            );
 
             // 요청받은 DTO 로 DB에 저장할 객체 만들기
             Board board = boardRepository.saveAndFlush(new Board(requestDto, user));
 
             return new BoardResponseDto(board);
-        } else {
-            return null;
-        }
 
             /*Board board = new Board(requestDto); // Board 에다가 requestDto의 데이터를 넣어주기 위한 코드
         boardRepository.saveAndFlush(board); // 그다음 Repository에 있는 리스트에 작성자,제목,작성 내용, 패스워드, 작성날짜, 고유번호를 넣어줌
@@ -74,78 +57,94 @@ public class BoardService {
     public BoardResponseDto find(Long id, BoardRequestDto requestDto) { // 선택한 게시물 찾기
 
         Board board = boardRepository.findById(id).orElseThrow( // 게시물의 고유id를 먼저 찾아서
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
+                () -> new IllegalArgumentException("게시물이 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
         );
 
             // 요청받은 DTO 로 DB에 저장할 객체 만들기
             board.find(requestDto);
-            new BoardResponseDto(board);
 
             return new BoardResponseDto(board);
     }
 
     @Transactional
-    public BoardResponseDto update(Long id, BoardRequestDto requestDto, HttpServletRequest request) { // 게시물 수정하는 코드
-        Board board = boardRepository.findById(id).orElseThrow( // 게시물의 고유 ID를 검색해서 게시물이 있는지 없는지 확인을 먼저 해줌
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.") // 아이디가 빈칸이면 존재하지 않습니다를 표기해줌
-        );
+    public BoardResponseDto update(Long id, BoardRequestDto requestDto, User user) { // 게시물 수정하는 코드
 
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
 
-        // 토큰이 있는 경우에만 관심상품 최저가 업데이트 가능
-        if (token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
+        Board board = new Board();
 
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+        roleAuthority(id, user, board);
+       /* // 사용자 권한 가져와서 ADMIN 이면 전체 수정,삭제 USER 면 본인의 게시글만 수정,삭제
+        UserRoleEnum userRoleEnum = user.getRole();
+
+        Board board;
+
+
+        if (userRoleEnum == UserRoleEnum.USER) { // 사용자 권한이 USER일 경우
+            board = boardRepository.findByIdAndUserId(id, user.getId()).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                    () -> new IllegalArgumentException("게시물이 존재하지 않습거나 회원님의 게시물이 아닙니다.")
             );
+        } else { // 사용자 권한이 ADMIN일 경우
+            board = boardRepository.findById(id).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                    () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
+            );
+        }*/
+
+
 
             // 요청받은 DTO 로 DB에 저장할 객체 만들기
             board.update(requestDto);
 
             return new BoardResponseDto(board);
-        } else {
-            return null;
-        }
 
     }
 
     @Transactional
-    public String deleteBoard(Long id, BoardRequestDto requestDto, HttpServletRequest request)  { // 게시물 삭제
-        Board board = boardRepository.findById(id).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+    public ResponseEntity<CheckResponseDto> deleteBoard(Long id,User user)  { // 게시물 삭제
+
+        Board board = new Board();
+
+        roleAuthority(id, user, board);
+
+        /*// 사용자 권한 가져와서 ADMIN 이면 전체 수정,삭제 USER 면 본인의 게시글만 수정,삭제
+        UserRoleEnum userRoleEnum = user.getRole();
+
+        Board board;
+
+
+        if (userRoleEnum == UserRoleEnum.USER) {
+            board = boardRepository.findByIdAndUserId(id, user.getId()).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                () -> new IllegalArgumentException("게시물이 존재하지 않습거나 회원님의 게시물이 아닙니다.")
         );
-        String token = jwtUtil.resolveToken(request);
-        Claims claims;
+            // 사용자 권한이 USER일 경우
+        } else {
+            board = boardRepository.findById(id).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
+        );
+        }*/
 
-        // 토큰이 있는 경우에만 관심상품 최저가 업데이트 가능
-        if (token != null) {
-            // Token 검증
-            if (jwtUtil.validateToken(token)) {
-                // 토큰에서 사용자 정보 가져오기
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("Token Error");
-            }
 
-            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
+
+        boardRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new CheckResponseDto(HttpStatus.OK.value(),"게시글이 삭제가 되었습니다."));
+    }
+
+    private void roleAuthority(Long id, User user, Board board){ // 사용자 권한을 메서드로 만들어주었음
+        // 사용자 권한 가져와서 ADMIN 이면 전체 수정,삭제 USER 면 본인의 게시글만 수정,삭제
+        UserRoleEnum userRoleEnum = user.getRole();
+
+
+
+        if (userRoleEnum == UserRoleEnum.USER) {
+            board = boardRepository.findByIdAndUserId(id, user.getId()).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                    () -> new IllegalArgumentException("게시물이 존재하지 않습거나 회원님의 게시물이 아닙니다.")
             );
-
-            boardRepository.deleteById(id);
-            return ("게시글이 삭제 되었습니다.");
-        }else {
-                return null;
-            }
+            // 사용자 권한이 USER일 경우
+        } else {
+            board = boardRepository.findById(id).orElseThrow( // 고유 ID를 찾아줘서 게시물이 있는지 확인을 해줌
+                    () -> new IllegalArgumentException("게시물이 존재하지 않습니다.")
+            );
+        }
     }
 
 }
+

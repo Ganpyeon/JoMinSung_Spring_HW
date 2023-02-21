@@ -23,19 +23,23 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String title;
 
-//    @Column(nullable = false)
-//    private String password;
+   /* @ManyToOne
+    @JoinColumn(name = "userid")
+    private User userId; // user와 board에 연관관계를 해서 user에 있는 변수들을 찾아서 쓸수있게 만들어줌*/
+    // 오늘 물어볼거
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    private User userId; // user와 board에 연관관계를 해서 user에 있는 변수들을 찾아서 써줌
+    private User user; // user와 board에 연관관계를 해서 user에 있는 변수들을 찾아서 쓸수있게 만들어줌
+
+
 
 
 
     public Board(BoardRequestDto requestDto,User userId) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
-        this.userId = userId; // 이걸로 user에 있는 데이터까지 다 받아줌
+        this.user = userId;
     }
 
     public void find(BoardRequestDto boardRequestDto) {

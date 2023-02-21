@@ -2,9 +2,14 @@ package com.sparta.hanghaespringhw.controller;
 
 import com.sparta.hanghaespringhw.dto.BoardRequestDto;
 import com.sparta.hanghaespringhw.dto.BoardResponseDto;
+import com.sparta.hanghaespringhw.dto.CheckResponseDto;
 import com.sparta.hanghaespringhw.entity.Board;
+import com.sparta.hanghaespringhw.entity.User;
+import com.sparta.hanghaespringhw.security.UserDetailsImpl;
 import com.sparta.hanghaespringhw.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,10 +22,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
-
     @PostMapping("/api/boards")
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) { // 웹에서 DB로 게시물 저장을 위한 코드
-        return boardService.createBoard(requestDto, request);
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) { // 웹에서 DB로 게시물 저장을 위한 코드
+        return boardService.createBoard(requestDto, userDetails.getUser());
     }
 
     @GetMapping("/api/boards")
@@ -34,13 +38,13 @@ public class BoardController {
     }
 
     @PutMapping("/api/boards/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request)  { // 게시물 수정코드 이다
-        return boardService.update(id, requestDto, request);
+    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails)  { // 게시물 수정코드 이다
+        return boardService.update(id, requestDto,  userDetails.getUser());
     }
 
 
     @DeleteMapping("/api/boards/{id}")
-    public String deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request)  {
-        return boardService.deleteBoard(id, requestDto, request);
+    public ResponseEntity<CheckResponseDto> deleteBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails)  {
+        return boardService.deleteBoard(id, userDetails.getUser());
     }
 }

@@ -22,4 +22,7 @@ public class SignupRequestDto { // 회원 가입 하는 코드이다.
     @Pattern(regexp = "^[a-zA-Z0-9~!@#$%^&*()_+=?,./<>{}\\[\\]\\-]{8,15}$", message = "비밀번호는 8~15자 영문 대 소문자, 숫자를 사용하세요.")
     private String password;
 
+
+    private boolean admin = false; // 관리자 권한 받을건지에 대한 on off
+    private String adminToken = "";
 }
