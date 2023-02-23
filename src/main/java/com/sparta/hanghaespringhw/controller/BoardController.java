@@ -33,12 +33,12 @@ public class BoardController {
     }
 
     @GetMapping("/api/boards/{id}")
-    public BoardResponseDto findBoard(@PathVariable Long id,@RequestBody BoardRequestDto requestDto)  { // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
+    public ResponseEntity findBoard(@PathVariable Long id,@RequestBody BoardRequestDto requestDto)  { // 선택한 게시물을 찾아주는 코드이며 고유 id를 받고 똑같은 게시물을 찾아줌
         return boardService.find(id, requestDto);
     }
 
     @PutMapping("/api/boards/{id}")
-    public BoardResponseDto updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails)  { // 게시물 수정코드 이다
+    public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails)  { // 게시물 수정코드 이다
         return boardService.update(id, requestDto,  userDetails.getUser());
     }
 

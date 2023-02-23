@@ -36,9 +36,9 @@ public class    UserService {
     }
 
     @Transactional
-    public ResponseEntity<CheckResponseDto> signup(SignupRequestDto signupRequestDto) {
+    public ResponseEntity<CheckResponseDto> signup(SignupRequestDto signupRequestDto) { // 회원 가입
         String username = signupRequestDto.getUsername();
-        String password = passwordEncoder.encode(signupRequestDto.getPassword());//회원 가입 코드 이다.
+        String password = passwordEncoder.encode(signupRequestDto.getPassword()); // 비밀번호를 암호화 해주기 위해 encoder를 사용하였다.
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(signupRequestDto.getUsername());
@@ -48,9 +48,9 @@ public class    UserService {
 
         // 사용자 ROLE 확인
         UserRoleEnum role = UserRoleEnum.USER;
-        if (signupRequestDto.isAdmin()) {
-            if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+        if (signupRequestDto.isAdmin()) { // 여기서 관리자 권한을 넣을건지 조건으로 넣어줌
+            if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) { // 위에서 관리자 권한을 넣는다고 true값이 되면 adminToken을 넣고 일치하는지 확인한다.
+                return badRequest("관리자 암호가 틀려 등록이 불가능합니다.");
             }
             role = UserRoleEnum.ADMIN;
         }
