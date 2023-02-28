@@ -43,15 +43,17 @@ public class Board extends Timestamped {
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Likes> likesList = new ArrayList<>();
 
-
-
+    private Integer likeCount;
 
 
     public Board(BoardRequestDto requestDto,User userId) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
         this.user = userId;
+        this.likeCount = 0;
     }
 
     public void find(BoardRequestDto boardRequestDto) {
@@ -62,5 +64,13 @@ public class Board extends Timestamped {
     public void update(BoardRequestDto boardRequestDto) {
         this.contents = boardRequestDto.getContents();
         this.title = boardRequestDto.getTitle();
+    }
+
+    public void likeBoardUp(){
+        this.likeCount += 1;
+    }
+
+    public void likeBoardDown(){
+        this.likeCount -= 1;
     }
 }

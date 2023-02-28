@@ -10,6 +10,7 @@ public class CheckResponseDto { // 예외처리 할때 상태 코드와 상태 �
     private String checkmsg;
 
 
+
     public CheckResponseDto(int checkcode, String checkmsg){
         this.checkmsg = checkmsg;
         this.checkcode = checkcode;

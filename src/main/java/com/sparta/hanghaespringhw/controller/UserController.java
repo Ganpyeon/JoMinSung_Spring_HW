@@ -5,18 +5,15 @@ import com.sparta.hanghaespringhw.dto.LoginRequestDto;
 import com.sparta.hanghaespringhw.dto.SignupRequestDto;
 import com.sparta.hanghaespringhw.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor

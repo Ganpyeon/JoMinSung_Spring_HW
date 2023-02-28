@@ -3,17 +3,13 @@ package com.sparta.hanghaespringhw.controller;
 import com.sparta.hanghaespringhw.dto.BoardRequestDto;
 import com.sparta.hanghaespringhw.dto.BoardResponseDto;
 import com.sparta.hanghaespringhw.dto.CheckResponseDto;
-import com.sparta.hanghaespringhw.entity.Board;
-import com.sparta.hanghaespringhw.entity.User;
 import com.sparta.hanghaespringhw.security.UserDetailsImpl;
 import com.sparta.hanghaespringhw.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -38,7 +34,7 @@ public class BoardController {
     }
 
     @PutMapping("/api/boards/{id}")
-    public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails)  { // 게시물 수정코드 이다
+    public ResponseEntity updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails)  { // 게시물 수정코드 이다
         return boardService.update(id, requestDto,  userDetails.getUser());
     }
 

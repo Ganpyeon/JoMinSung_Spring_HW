@@ -1,6 +1,7 @@
 package com.sparta.hanghaespringhw.dto;
 
 import com.sparta.hanghaespringhw.entity.Board;
+import com.sparta.hanghaespringhw.entity.Likes;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,12 @@ public class BoardResponseDto { // Entity값은 변형 되지 말아야 하고 �
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+    private Integer likeCount;
     private List<CommentResponseDto> commentList;
+
+
+
 
 
     public BoardResponseDto(Board board) {
@@ -26,6 +32,7 @@ public class BoardResponseDto { // Entity값은 변형 되지 말아야 하고 �
         this.title = board.getTitle();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
+        this.likeCount = board.getLikeCount();
         this.commentList = board.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList());
     }
 
